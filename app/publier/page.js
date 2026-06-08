@@ -12,6 +12,7 @@ export default function Publier() {
   const [quartier, setQuartier] = useState('')
   const [telephone, setTelephone] = useState('+226')
   const [whatsapp, setWhatsapp] = useState('+226')
+  const [imageUrl, setImageUrl] = useState('')
 
   async function publierAnnonce(e) {
     e.preventDefault()
@@ -23,20 +24,32 @@ export default function Publier() {
           nom_bailleur: nomBailleur,
           description,
           type_logement: typeLogement,
-          prix,
+          prix: parseInt(prix),
           ville,
           quartier,
           telephone,
-          whatsapp
+          whatsapp,
+          image_url: imageUrl
         }
       ])
 
     if (error) {
       alert('Erreur lors de la publication')
       console.log(error)
-    } else {
-      alert('Annonce publiée avec succès')
+      return
     }
+
+    alert('Annonce publiée avec succès')
+
+    setNomBailleur('')
+    setDescription('')
+    setTypeLogement('')
+    setPrix('')
+    setVille('')
+    setQuartier('')
+    setTelephone('+226')
+    setWhatsapp('+226')
+    setImageUrl('')
   }
 
   return (
@@ -44,85 +57,97 @@ export default function Publier() {
       <h1>Publier une annonce</h1>
 
       <form onSubmit={publierAnnonce}>
-
         <input
+          type="text"
           placeholder="Nom du bailleur"
           value={nomBailleur}
           onChange={(e) => setNomBailleur(e.target.value)}
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
-
-        <br /><br />
 
         <textarea
           placeholder="Description et commodités"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
-
-        <br /><br />
 
         <select
           value={typeLogement}
           onChange={(e) => setTypeLogement(e.target.value)}
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         >
-          <option value="">Choisir</option>
+          <option value="">Choisir un type de logement</option>
           <option>Chambre salon</option>
-          <option>Entrée couché</option>
+          <option>Entrée couchée</option>
           <option>2 chambres salon</option>
           <option>3 chambres salon</option>
           <option>Mini villa</option>
         </select>
 
-        <br /><br />
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+          <input
+            type="number"
+            placeholder="Prix"
+            value={prix}
+            onChange={(e) => setPrix(e.target.value)}
+            required
+            style={{ flex: 1, padding: '10px' }}
+          />
+          <span style={{ marginLeft: '10px' }}>FCFA</span>
+        </div>
 
         <input
-          type="number"
-          placeholder="Prix"
-          value={prix}
-          onChange={(e) => setPrix(e.target.value)}
-        />
-
-        <span> FCFA</span>
-
-        <br /><br />
-
-        <input
+          type="text"
           placeholder="Ville"
           value={ville}
           onChange={(e) => setVille(e.target.value)}
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
 
-        <br /><br />
-
         <input
+          type="text"
           placeholder="Quartier"
           value={quartier}
           onChange={(e) => setQuartier(e.target.value)}
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
 
-        <br /><br />
-
         <input
-          placeholder="Téléphone"
+          type="text"
           value={telephone}
           onChange={(e) => setTelephone(e.target.value)}
+          placeholder="Téléphone"
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
-
-        <br /><br />
 
         <input
-          placeholder="WhatsApp"
+          type="text"
           value={whatsapp}
           onChange={(e) => setWhatsapp(e.target.value)}
+          placeholder="WhatsApp"
+          required
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
         />
 
-        <br /><br />
+        <input
+          type="text"
+          placeholder="Lien photo de la maison"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
+        />
 
         <button type="submit">
           Publier l'annonce
         </button>
-
       </form>
     </main>
   )
-      }
+  }
